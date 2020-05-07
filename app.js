@@ -1,7 +1,9 @@
 var api = "https://api.covid19api.com/summary";
 var boton = document.getElementById("botonCalcular");
 var input = document.getElementById("pais");
+const selectElement = document.getElementById("select");
 const miJson = getJSON(api);
+init();
 function imprimir(cadena) {
   console.log(cadena);
 }
@@ -16,7 +18,9 @@ function alerta(texto){
 	  })
 
 }
-
+function obtenerLocacion (){
+    return selectElement.options[selectElement.selectedIndex].value;
+}
 
 function getJSON(theUrl)
 {
@@ -24,6 +28,14 @@ function getJSON(theUrl)
     xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
     xmlHttp.send( null );
     return JSON.parse(xmlHttp.responseText);
+}
+function obtenerPaises () {
+    var arr = [];
+    var i = 0;
+    for (i in miJson.Countries){
+        arr[i] = miJson.Countries[i].Country;
+    }
+    return arr;
 }
 
 function obtenerInfo(miPais){
@@ -43,17 +55,18 @@ function obtenerInfo(miPais){
     return info;
 }
 
-
-boton.onclick = function() {
-    if(input.value == "")
-        alerta("Ingrese un pais valido")
-    else {
-        var pais = input.value;
-        var arr = obtenerInfo(pais);
-        mostrar(arr);
-        input.value = "";   
-    }
+selectElement.onchange = function (){
+   
+        var paisSeleccionado = obtenerLocacion();
+        if (paisSeleccionado == "undefined")
+            alerta("Paso algo")
+        else{
+            var arr = obtenerInfo(paisSeleccionado);
+            mostrar(arr);
+        }
+        
 }
+
 
 function mostrar(informacion){
     document.getElementById("info4").innerHTML =  informacion[0];
@@ -62,4 +75,14 @@ function mostrar(informacion){
     document.getElementById("info1").innerHTML =  informacion[3];
     document.getElementById("info2").innerHTML =  informacion[4];
     document.getElementById("info3").innerHTML =  informacion[5];
+}
+
+function init() {
+    var paises = obtenerPaises();
+    for (i in paises) {
+        var opt = document.createElement("option");
+        opt.value = paises[i];
+        opt.innerHTML = paises[i];
+        selectElement.appendChild(opt);
+    }
 }

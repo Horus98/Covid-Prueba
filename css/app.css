@@ -52,45 +52,28 @@ background-color: rgb(22, 22, 22);
 
 }
 
-
-.cajatexto{
-background-color: #030303;
-border-radius: 4px;
-color:rgb(255, 255, 255); 
-border: 2px solid black;
-height: 25px;
-font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
-font-size: 16px ;
+.select {
+  width: 300px;
+  height: 30px;
+  border-radius: 5px 5px 5px 5px; 
+  outline: none;
+  background-color: whitesmoke;
+  color: black;
+  cursor: pointer;
 }
 
-@media only screen and (min-width: 300px){
-  .cajatexto{
-    width: 160px;
-    height: 18px;
-    font-size: 9px;
-  }
+select :focus{
+  border-radius: 10px 10px 10px 10px;
 }
 
-@media only screen and (min-width: 350px){
-  .cajatexto{
-    width: 200px;
-    height: 20px;
-    font-size: 11px;
-  }
-}
 
-@media only screen and (min-width: 450px){
-  .cajatexto{
-    width: 300px;
-    font-size: 16px;
-  }
-}
 
-.cajatexto:focus{
-outline: 0;
-border-radius: 3px;
-box-shadow: 0 0 0 2px red;
+
+option{
+  font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial", sans-serif;
 }
+  
+
 
 .caja { 
   font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif; 
@@ -168,30 +151,9 @@ box-shadow: 0 0 0 2px red;
   }
 }
 
-
-.botonCalcular{
-  padding: 16px 36px;
-  border-radius: 6px;
-  border: 2px solid darkgrey;
-  background: transparent;
-  color: darkgrey;
-  font-size: 18px;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  outline: none;
-  cursor: pointer;
-  transition-duration: 0.5s;
-  font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial", sans-serif;
-}
-.botonCalcular:hover {
-  background-color: red;
-  color: black;
-  border-color: black;
-}
-.botonCalcular :focus{
-  box-shadow: 0 0 0 3px red;
-  border-radius: 3px;
+.imagen{
+  height: 15px;
+  width: 15px;
 }
 
 .tablaResultado {
