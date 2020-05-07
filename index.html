@@ -1,0 +1,68 @@
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Librerias del alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet"> 
+	<script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/app.css" type="text/css" id="theme">
+    <link rel="icon" href="reloj.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> COVID-19 INFO</title>
+</head>
+<body class="background">
+    
+    <header>
+        
+        <p class="titulo">    
+            <div class="font">COVID-19 INFORMACION
+            </div> 
+        </p>
+    </header>
+    <p>
+        <div class="caja">
+            <p> 
+                En esta pagina usted podra averiguar cierta Informacion del covid-19 de un pais o del mundo entero.
+            </p>
+        </div>
+    </p>
+    <p>
+        <div class="txt">
+                <input class="cajatexto" type="text" name="cajaVel" id="pais" placeholder="Ingrese el pais" > 
+        </div>
+        <br>
+        <div>
+            <button class="botonCalcular" id="botonCalcular"> Obtener Informacion </button>
+        </div>
+    </p>
+    <br>
+   <p>
+    <table class="tablaResultado">
+        <tr class="fila">
+          <th class="encabezado">Muertos Global</th>
+          <th class="encabezado">Recuperados Global</th>
+          <th class="encabezado">Confirmados Global</th>
+          <th class="encabezado">Muertos Pais</th>
+          <th class="encabezado">Recuperados Pais</th>
+          <th class="encabezado">Confirmados Pais</th>
+        </tr>
+        <tr class="fila">
+          <td class="columna" id="info1"></td>
+          <td class="columna" id="info2"></td>
+          <td class="columna" id="info3"></td>   
+          <td class="columna" id="info4"></td>   
+          <td class="columna" id="info5"></td>   
+          <td class="columna" id="info6"></td>        
+        </tr>
+        
+      </table>
+   </p>
+
+    <script src="app.js"></script>
+
+</body>
+</html>

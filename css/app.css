@@ -1,0 +1,254 @@
+@import url(https://fonts.googleapis.com/css?family=Lato);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css);
+
+
+
+.font{
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 29px;
+  text-align: center;
+  letter-spacing: 2px;
+  word-spacing: 2px;
+  color:rgb(131, 131, 131);
+  font-weight: 700;
+  text-decoration: none;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+  position: relative;
+  }
+
+  
+  @media only screen and (min-width: 300px){
+    .font{
+      font-size: 16px;
+    }
+  }
+  @media only screen and (min-width: 530px){
+    .font{
+      font-size: 20px;
+    }
+  }
+  @media only screen and (min-width: 650px){
+    .font{
+      font-size: 23px;
+    }
+  }
+  
+  @media only screen and (min-width: 768px){
+    .font{
+      font-size: 27px;
+    }
+  }
+  @media only screen and (min-width: 1080px){
+    .font{
+      font-size: 30px;
+    }
+  }
+
+.background {
+background-color: rgb(22, 22, 22);
+-webkit-font-smoothing: antialiased;
+
+}
+
+
+.cajatexto{
+background-color: #030303;
+border-radius: 4px;
+color:rgb(255, 255, 255); 
+border: 2px solid black;
+height: 25px;
+font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+font-size: 16px ;
+}
+
+@media only screen and (min-width: 300px){
+  .cajatexto{
+    width: 160px;
+    height: 18px;
+    font-size: 9px;
+  }
+}
+
+@media only screen and (min-width: 350px){
+  .cajatexto{
+    width: 200px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+
+@media only screen and (min-width: 450px){
+  .cajatexto{
+    width: 300px;
+    font-size: 16px;
+  }
+}
+
+.cajatexto:focus{
+outline: 0;
+border-radius: 3px;
+box-shadow: 0 0 0 2px red;
+}
+
+.caja { 
+  font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif; 
+  color: #ffffff; 
+  font-size: 18px; 
+  font-weight: 400; 
+  text-align: center; 
+  background: #030303; 
+  margin: 0 0 25px; 
+  overflow: hidden; 
+  padding: 20px; 
+  border-radius: 35px 35px 35px 35px; 
+  -moz-border-radius: 35px 35px 35px 35px; 
+  -webkit-border-radius: 35px 35px 35px 35px; 
+  border: 2px solid #030303;
+}
+
+@media only screen and (min-width: 300px){
+  .caja{
+    
+    font-size: 10px;
+  }
+}
+
+@media only screen and (min-width: 350px){
+  .caja{
+    
+    font-size: 12px;
+  }
+}
+
+@media only screen and (min-width: 450px){
+  .caja{
+    
+    font-size: 18px;
+  }
+}
+
+
+
+
+.txt {
+  color: rgb(112, 112, 112);
+  font-size: 18px;
+  text-align: center;
+  font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+
+}
+
+
+@media only screen and (min-width: 300px){
+  .txt{
+    font-size: 8px;
+  }
+}
+@media only screen and (min-width: 350px){
+  .txt{
+    font-size: 12px;
+  }
+}
+@media only screen and (min-width: 650px){
+  .txt{
+    font-size: 14px;
+  }
+}
+
+@media only screen and (min-width: 768px){
+  .txt{
+    font-size: 16px;
+  }
+}
+@media only screen and (min-width: 1080px){
+  .txt{
+    font-size: 18px;
+  }
+}
+
+
+.botonCalcular{
+  padding: 16px 36px;
+  border-radius: 6px;
+  border: 2px solid darkgrey;
+  background: transparent;
+  color: darkgrey;
+  font-size: 18px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  outline: none;
+  cursor: pointer;
+  transition-duration: 0.5s;
+  font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial", sans-serif;
+}
+.botonCalcular:hover {
+  background-color: red;
+  color: black;
+  border-color: black;
+}
+.botonCalcular :focus{
+  box-shadow: 0 0 0 3px red;
+  border-radius: 3px;
+}
+
+.tablaResultado {
+ 
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+
+@media only screen and (min-width: 300px){
+  .tablaResultado{
+    
+    font-size: 10px;
+  }
+}
+
+@media only screen and (min-width: 350px){
+  .tablaResultado{
+    
+    font-size: 12px;
+  }
+}
+
+@media only screen and (min-width: 450px){
+  .tablaResultado{
+    
+    font-size: 14px;
+  }
+}
+
+@media only screen and (min-width: 720px){
+  .tablaResultado{
+    
+    font-size: 18px;
+  }
+}
+
+.columna{
+  padding: 8px;
+}
+
+
+.fila {
+  font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+  color: black;
+  background-color: darkgray;
+}
+
+
+
+.encabezado {
+  background-color: rgb(58, 58, 58);
+  text-align: center;
+  color: white;
+  font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+  width: 20%;
+ 
+}
+
