@@ -5,6 +5,10 @@ const selectElement = document.getElementById("select");
 const miJson = getJSON(api);
 init();
 
+
+
+
+
 function imprimir(cadena) {
     console.log(cadena);
 }
@@ -78,6 +82,10 @@ function mostrar(informacion) {
     document.getElementById("info1").innerHTML = informacion[3];
     document.getElementById("info2").innerHTML = informacion[4];
     document.getElementById("info3").innerHTML = informacion[5];
+    document.getElementById("infoMuertosPais").innerHTML = "Muertos en " + selectElement.value;
+    document.getElementById("infoRecuperadosPais").innerHTML ="Recuperados en " + selectElement.value ;
+    document.getElementById("infoConfirmadosPais").innerHTML ="Confirmados en " + selectElement.value;
+
     setRowVisible();
 }
 /**
