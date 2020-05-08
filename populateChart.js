@@ -33,6 +33,7 @@ function onLoad() {
     var chart = new CanvasJS.Chart("chartContainer", {
         animationEnabled: true,
         theme: "dark1",
+        backgroundColor: "#161616",
         title: {
             text: "Evolution COVID-19"
         },
