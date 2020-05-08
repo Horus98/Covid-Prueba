@@ -4,77 +4,90 @@ var input = document.getElementById("pais");
 const selectElement = document.getElementById("select");
 const miJson = getJSON(api);
 init();
+
 function imprimir(cadena) {
-  console.log(cadena);
+    console.log(cadena);
 }
-function alerta(texto){
-	Swal.fire({
-		icon: 'error',
-		title: 'Oops...',
-		text: texto,
-		timer: 2000,
-		confirmButtonColor: '#d33',
-		timerProgressBar: true,
-	  })
+
+function alerta(texto) {
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: texto,
+        timer: 2000,
+        confirmButtonColor: '#d33',
+        timerProgressBar: true,
+    })
 
 }
-function obtenerLocacion (){
+
+function obtenerLocacion() {
     return selectElement.options[selectElement.selectedIndex].value;
 }
 
-function getJSON(theUrl)
-{
+function getJSON(theUrl) {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-    xmlHttp.send( null );
+    xmlHttp.open("GET", theUrl, false); // false for synchronous request
+    xmlHttp.send(null);
     return JSON.parse(xmlHttp.responseText);
 }
-function obtenerPaises () {
+
+function obtenerPaises() {
     var arr = [];
     var i = 0;
-    for (i in miJson.Countries){
+    for (i in miJson.Countries) {
         arr[i] = miJson.Countries[i].Country;
     }
     return arr;
 }
 
-function obtenerInfo(miPais){
+function obtenerInfo(miPais) {
     var global = miJson.Global;
     var paises = miJson.Countries;
     var info = [];
-    for (i in paises){
-        if((paises[i].Country == miPais) || paises[i].Slug == miPais) {
+    for (i in paises) {
+        if ((paises[i].Country == miPais) || paises[i].Slug == miPais) {
             info[0] = paises[i].TotalDeaths;
             info[1] = paises[i].TotalRecovered;
             info[2] = paises[i].TotalConfirmed;
-            }
         }
+    }
     info[3] = global.TotalDeaths;
     info[4] = global.TotalRecovered;
     info[5] = global.TotalConfirmed;
     return info;
 }
 
-selectElement.onchange = function (){
-   
-        var paisSeleccionado = obtenerLocacion();
-        if (paisSeleccionado == "undefined")
-            alerta("Paso algo")
-        else{
-            var arr = obtenerInfo(paisSeleccionado);
-            mostrar(arr);
-        }
-        
+selectElement.onchange = function() {
+
+    var paisSeleccionado = obtenerLocacion();
+    if (paisSeleccionado == "undefined")
+        alerta("Paso algo")
+    else {
+        var arr = obtenerInfo(paisSeleccionado);
+        mostrar(arr);
+    }
+
 }
 
 
-function mostrar(informacion){
-    document.getElementById("info4").innerHTML =  informacion[0];
-    document.getElementById("info5").innerHTML =  informacion[1];
-    document.getElementById("info6").innerHTML =  informacion[2];
-    document.getElementById("info1").innerHTML =  informacion[3];
-    document.getElementById("info2").innerHTML =  informacion[4];
-    document.getElementById("info3").innerHTML =  informacion[5];
+function mostrar(informacion) {
+    document.getElementById("info4").innerHTML = informacion[0];
+    document.getElementById("info5").innerHTML = informacion[1];
+    document.getElementById("info6").innerHTML = informacion[2];
+    document.getElementById("info1").innerHTML = informacion[3];
+    document.getElementById("info2").innerHTML = informacion[4];
+    document.getElementById("info3").innerHTML = informacion[5];
+    setRowVisible();
+}
+/**
+ * Hace visible la fila que contiene la informacion de la tabla
+ */
+function setRowVisible() {
+    let listClassesRow = document.getElementById("infoRow").classList
+    if (listClassesRow.contains('sr-only'))
+    //Solo se ejecuta la primera vez que se selecciona un pais
+        listClassesRow.remove('sr-only')
 }
 
 function init() {
