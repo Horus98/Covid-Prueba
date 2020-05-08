@@ -34,7 +34,7 @@
         <div class="col-4"></div>
         <div class="col-4">
             <div class="txt">
-                <select class="custom-select" id="select" name="select">
+                <select class="custom-select my-select" id="select" name="select">
                     <option disabled selected>Selecciona una opción</option>
                 </select>
             </div>
@@ -48,9 +48,9 @@
                     <th class="encabezado">Muertos Global</th>
                     <th class="encabezado">Recuperados Global</th>
                     <th class="encabezado">Confirmados Global</th>
-                    <th class="encabezado" id = "infoMuertosPais">Muertos en</th>
-                    <th class="encabezado" id = "infoRecuperadosPais">Recuperados en</th>
-                    <th class="encabezado" id = "infoConfirmadosPais">Confirmados en</th>
+                    <th class="encabezado" id="infoMuertosPais">Muertos en</th>
+                    <th class="encabezado" id="infoRecuperadosPais">Recuperados en</th>
+                    <th class="encabezado" id="infoConfirmadosPais">Confirmados en</th>
                 </tr>
                 <tr class="fila sr-only" id="infoRow">
                     <td class="columna" id="info1"></td>
@@ -63,8 +63,16 @@
             </table>
         </div>
     </div>
+    <div class="row mt-5">
+        <div class="col">
+            <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;">
+            </div>
+        </div>
+    </div>
 
+    <script src="canvasjs.min.js"></script>
     <script src="app.js"></script>
+    <script src="populateChart.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
