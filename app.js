@@ -1,8 +1,9 @@
 var api = "https://api.covid19api.com/summary";
-var boton = document.getElementById("botonCalcular");
+
 var input = document.getElementById("pais");
 const selectElement = document.getElementById("select");
 const miJson = getJSON(api);
+initGlobal();
 init();
 
 function alerta(texto) {
@@ -38,7 +39,6 @@ function obtenerPaises() {
 }
 
 function obtenerInfo(miPais) {
-    var global = miJson.Global;
     var paises = miJson.Countries;
     var info = [];
     for (i in paises) {
@@ -48,9 +48,6 @@ function obtenerInfo(miPais) {
             info[2] = paises[i].TotalConfirmed;
         }
     }
-    info[3] = global.TotalDeaths;
-    info[4] = global.TotalRecovered;
-    info[5] = global.TotalConfirmed;
     return info;
 }
 
@@ -60,23 +57,37 @@ selectElement.onchange = function() {
     if (paisSeleccionado == "undefined")
         alerta("Paso algo")
     else {
-        var arr = obtenerInfo(paisSeleccionado);
-        mostrar(arr);
-        urlApiDayOne = "https://api.covid19api.com/total/dayone/country/" + paisSeleccionado;
-        drawChart();
-
+        if(paisSeleccionado != "Global"){
+            var arr = obtenerInfo(paisSeleccionado);
+            mostrar(arr);
+            urlApiDayOne = "https://api.covid19api.com/total/dayone/country/" + paisSeleccionado;
+            drawChart();
+        }
+        else{
+            initGlobal();
+        }
     }
+
+}
+
+function initGlobal() {
+    let global = miJson.Global;
+    document.getElementById("info3").innerHTML = global.TotalConfirmed ;
+    document.getElementById("info1").innerHTML = global.TotalDeaths;
+    document.getElementById("info2").innerHTML = global.TotalRecovered;
+    document.getElementById("infoMuertosPais").innerHTML = "Muertos en el mundo" ;
+    document.getElementById("infoRecuperadosPais").innerHTML = "Recuperados en el mundo" ;
+    document.getElementById("infoConfirmadosPais").innerHTML = "Confirmados en el mundo" ;
+    setRowVisible();
 
 }
 
 
 function mostrar(informacion) {
-    document.getElementById("info4").innerHTML = informacion[0];
-    document.getElementById("info5").innerHTML = informacion[1];
-    document.getElementById("info6").innerHTML = informacion[2];
-    document.getElementById("info1").innerHTML = informacion[3];
-    document.getElementById("info2").innerHTML = informacion[4];
-    document.getElementById("info3").innerHTML = informacion[5];
+    
+    document.getElementById("info1").innerHTML = informacion[0];
+    document.getElementById("info2").innerHTML = informacion[1];
+    document.getElementById("info3").innerHTML = informacion[2];
     document.getElementById("infoMuertosPais").innerHTML = "Muertos en " + selectElement.value;
     document.getElementById("infoRecuperadosPais").innerHTML = "Recuperados en " + selectElement.value;
     document.getElementById("infoConfirmadosPais").innerHTML = "Confirmados en " + selectElement.value;
