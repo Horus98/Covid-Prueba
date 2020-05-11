@@ -2,9 +2,8 @@ const urlCountries = "https://corona.lmao.ninja/v2/countries";
 const urlGlobalSummary = "https://disease.sh/v2/all?yesterday=false";
 var input = document.getElementById("pais");
 const selectElement = document.getElementById("select");
-const jsonCountries = getJSON(urlCountries);
-initGlobal();
-init();
+getJSON(urlCountries, init);
+
 
 function getSummaryUrl(country) {
     return (country !== "All") ? "https://disease.sh/v2/countries/" + country + "?yesterday=false&strict=false" : urlGlobalSummary;
@@ -30,14 +29,52 @@ function obtenerLocacion() {
     return selectElement.options[selectElement.selectedIndex].value;
 }
 
-function getJSON(theUrl) {
+function getJSON(theUrl, callbackFunction) {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", theUrl, false); // false for synchronous request
+    xmlHttp.open("GET", theUrl, true);
+
+    xmlHttp.onload = function() {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
+                callbackFunction(xmlHttp.responseText);
+            } else {
+                alerta("No hay datos historicos de este pais");
+            }
+        }
+    }
+
     xmlHttp.send(null);
-    return JSON.parse(xmlHttp.responseText);
 }
 
-function getCountries() {
+function init(responseText) {
+    initGlobal();
+    populateSelect(responseText);
+}
+
+function insertInTable(responseText) {
+    jsonSummary = JSON.parse(responseText)
+    document.getElementById('deaths').innerHTML = jsonSummary.deaths;
+    document.getElementById('recovered').innerHTML = jsonSummary.recovered;
+    document.getElementById('confirmed').innerHTML = jsonSummary.cases;
+    document.getElementById('active').innerHTML = jsonSummary.active;
+    document.getElementById('tests').innerHTML = jsonSummary.tests;
+    document.getElementById('critical').innerHTML = jsonSummary.critical;
+    setRowVisible();
+}
+
+
+function populateSelect(responseText) {
+    var paises = getCountries(responseText);
+    for (i in paises) {
+        var opt = document.createElement("option");
+        opt.value = paises[i];
+        opt.innerHTML = paises[i];
+        selectElement.appendChild(opt);
+    }
+}
+
+function getCountries(responseText) {
+    let jsonCountries = JSON.parse(responseText)
     let arr = []
     for (let i = 0; i < jsonCountries.length; i++) {
         const countryName = jsonCountries[i].country;
@@ -47,14 +84,7 @@ function getCountries() {
 }
 
 function obtenerInfo(country) {
-    const jsonSummary = getJSON(getSummaryUrl(country));
-    document.getElementById('deaths').innerHTML = jsonSummary.deaths;
-    document.getElementById('recovered').innerHTML = jsonSummary.recovered;
-    document.getElementById('confirmed').innerHTML = jsonSummary.cases;
-    document.getElementById('active').innerHTML = jsonSummary.active;
-    document.getElementById('tests').innerHTML = jsonSummary.tests;
-    document.getElementById('critical').innerHTML = jsonSummary.critical;
-    setRowVisible();
+    getJSON(getSummaryUrl(country), insertInTable);
 }
 
 selectElement.onchange = function() {
@@ -87,14 +117,4 @@ function setRowVisible() {
     if (listClassesRow.contains('sr-only'))
     //Solo se ejecuta la primera vez que se selecciona un pais
         listClassesRow.remove('sr-only')
-}
-
-function init() {
-    var paises = getCountries();
-    for (i in paises) {
-        var opt = document.createElement("option");
-        opt.value = paises[i];
-        opt.innerHTML = paises[i];
-        selectElement.appendChild(opt);
-    }
 }

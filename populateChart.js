@@ -1,9 +1,6 @@
 function drawChart() {
-    var jsonDayOne = getJSON(getDayOneUrl(obtenerLocacion()));
-    var table = onLoad();
-    var newCasesTable = onLoadNewCases();
-    populateChartConfirmed(table, jsonDayOne);
-    populateChartNewCases(newCasesTable, jsonDayOne);
+    getJSON(getDayOneUrl(obtenerLocacion()), initCharts);
+
 }
 
 function populateArrayDayOne(jsonDayOne) {
@@ -21,12 +18,12 @@ function populateArrayDayOne(jsonDayOne) {
     return arrDayOne;
 }
 
-
-function getJSON(theUrl) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", theUrl, false); // false for synchronous request
-    xmlHttp.send(null);
-    return JSON.parse(xmlHttp.responseText);
+function initCharts(responseText) {
+    const jsonDayOne = JSON.parse(responseText);
+    var table = onLoad();
+    var newCasesTable = onLoadNewCases();
+    populateChartConfirmed(table, jsonDayOne);
+    populateChartNewCases(newCasesTable, jsonDayOne);
 }
 
 function populateChartConfirmed(chart, jsonDayOne) {
@@ -38,19 +35,6 @@ function populateChartConfirmed(chart, jsonDayOne) {
     chart.render();
 
 }
-/**
- * for (let i = 0; i < jsonDayOne.length; i++) {
-    calculatePoint(chart, jsonDayOne, i);
-    let date = new Date(jsonDayOne[i].Date);
-    date.setDate(date.getDate() + 1);
-    let totalDeaths = jsonDayOne[i].Deaths;
-    console.log(totalDeaths);
-    chart.options.data[1].dataPoints.push({
-        x: date,
-        y: totalDeaths
-    });
- */
-
 
 function populateChartNewCases(newCasesTable, jsonDayOne) {
     var arrDayOne = populateArrayDayOne(jsonDayOne);
