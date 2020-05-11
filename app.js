@@ -1,10 +1,18 @@
-var api = "https://api.covid19api.com/summary";
-
+const urlCountries = "https://corona.lmao.ninja/v2/countries";
+const urlGlobalSummary = "https://disease.sh/v2/all?yesterday=false";
 var input = document.getElementById("pais");
 const selectElement = document.getElementById("select");
-const miJson = getJSON(api);
+const jsonCountries = getJSON(urlCountries);
 initGlobal();
 init();
+
+function getSummaryUrl(country) {
+    return (country !== "All") ? "https://disease.sh/v2/countries/" + country + "?yesterday=false&strict=false" : urlGlobalSummary;
+}
+
+function getDayOneUrl(country) {
+    return "https://corona.lmao.ninja/v2/historical/" + country + "?lastdays=all"
+}
 
 function alerta(texto) {
     Swal.fire({
@@ -29,71 +37,48 @@ function getJSON(theUrl) {
     return JSON.parse(xmlHttp.responseText);
 }
 
-function obtenerPaises() {
-    var arr = [];
-    var i = 0;
-    for (i in miJson.Countries) {
-        arr[i] = miJson.Countries[i].Country;
+function getCountries() {
+    let arr = []
+    for (let i = 0; i < jsonCountries.length; i++) {
+        const countryName = jsonCountries[i].country;
+        arr.push(countryName);
     }
     return arr;
 }
 
-function obtenerInfo(miPais) {
-    var paises = miJson.Countries;
-    var info = [];
-    for (i in paises) {
-        if ((paises[i].Country == miPais) || paises[i].Slug == miPais) {
-            info[0] = paises[i].TotalDeaths;
-            info[1] = paises[i].TotalRecovered;
-            info[2] = paises[i].TotalConfirmed;
-        }
-    }
-    return info;
+function obtenerInfo(country) {
+    const jsonSummary = getJSON(getSummaryUrl(country));
+    document.getElementById('deaths').innerHTML = jsonSummary.deaths;
+    document.getElementById('recovered').innerHTML = jsonSummary.recovered;
+    document.getElementById('confirmed').innerHTML = jsonSummary.cases;
+    document.getElementById('active').innerHTML = jsonSummary.active;
+    document.getElementById('tests').innerHTML = jsonSummary.tests;
+    document.getElementById('critical').innerHTML = jsonSummary.critical;
+    setRowVisible();
 }
 
 selectElement.onchange = function() {
 
     var paisSeleccionado = obtenerLocacion();
-    if (paisSeleccionado == "undefined")
+    pais = paisSeleccionado;
+    if (paisSeleccionado === "undefined")
         alerta("Paso algo")
     else {
-        if(paisSeleccionado != "Global"){
-            var arr = obtenerInfo(paisSeleccionado);
-            mostrar(arr);
-            urlApiDayOne = "https://api.covid19api.com/total/dayone/country/" + paisSeleccionado;
+        if (paisSeleccionado != "All") {
+            obtenerInfo(paisSeleccionado);
             drawChart();
+
         }
-        else{
-            initGlobal();
-        }
+
     }
 
 }
 
 function initGlobal() {
-    let global = miJson.Global;
-    document.getElementById("info3").innerHTML = global.TotalConfirmed ;
-    document.getElementById("info1").innerHTML = global.TotalDeaths;
-    document.getElementById("info2").innerHTML = global.TotalRecovered;
-    document.getElementById("infoMuertosPais").innerHTML = "Muertos en el mundo" ;
-    document.getElementById("infoRecuperadosPais").innerHTML = "Recuperados en el mundo" ;
-    document.getElementById("infoConfirmadosPais").innerHTML = "Confirmados en el mundo" ;
-    setRowVisible();
-
+    obtenerInfo("All");
 }
 
 
-function mostrar(informacion) {
-    
-    document.getElementById("info1").innerHTML = informacion[0];
-    document.getElementById("info2").innerHTML = informacion[1];
-    document.getElementById("info3").innerHTML = informacion[2];
-    document.getElementById("infoMuertosPais").innerHTML = "Muertos en " + selectElement.value;
-    document.getElementById("infoRecuperadosPais").innerHTML = "Recuperados en " + selectElement.value;
-    document.getElementById("infoConfirmadosPais").innerHTML = "Confirmados en " + selectElement.value;
-
-    setRowVisible();
-}
 /**
  * Hace visible la fila que contiene la informacion de la tabla
  */
@@ -105,7 +90,7 @@ function setRowVisible() {
 }
 
 function init() {
-    var paises = obtenerPaises();
+    var paises = getCountries();
     for (i in paises) {
         var opt = document.createElement("option");
         opt.value = paises[i];

@@ -35,7 +35,7 @@
         <div class="col-4">
             <div class="txt">
                 <select class="custom-select my-select" id="select" name="select">
-                    <option >Global</option>
+                    <option >All</option>
                 </select>
             </div>
             <br>
@@ -45,15 +45,20 @@
         <div class="col">
             <table class="tablaResultado">
                 <tr class="fila">
-                    <th class="encabezado" id="infoMuertosPais">Muertos en</th>
-                    <th class="encabezado" id="infoRecuperadosPais">Recuperados en</th>
-                    <th class="encabezado" id="infoConfirmadosPais">Confirmados en</th>
+                    <th class="encabezado" id="infoMuertosPais">Muertos</th>
+                    <th class="encabezado" id="infoRecuperadosPais">Recuperados</th>
+                    <th class="encabezado" id="infoConfirmadosPais">Confirmados</th>
+                    <th class="encabezado" id="infoActive">Activos</th>
+                    <th class="encabezado" id="infoTests">Tests</th>
+                    <th class="encabezado" id="infoCritical">Criticos</th>
                 </tr>
                 <tr class="fila sr-only" id="infoRow">
-                    <td class="columna" id="info1"></td>
-                    <td class="columna" id="info2"></td>
-                    <td class="columna" id="info3"></td>
-
+                    <td class="columna" id="deaths"></td>
+                    <td class="columna" id="recovered"></td>
+                    <td class="columna" id="confirmed"></td>
+                    <td class="columna" id="active"></td>
+                    <td class="columna" id="tests"></td>
+                    <td class="columna" id="critical"></td>
                 </tr>
             </table>
         </div>

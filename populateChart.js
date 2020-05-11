@@ -1,11 +1,24 @@
-var urlApiDayOne = "https://api.covid19api.com/total/dayone/country/";
-
 function drawChart() {
-    var jsonDayOne = getJSON(urlApiDayOne);
+    var jsonDayOne = getJSON(getDayOneUrl(obtenerLocacion()));
     var table = onLoad();
     var newCasesTable = onLoadNewCases();
     populateChartConfirmed(table, jsonDayOne);
     populateChartNewCases(newCasesTable, jsonDayOne);
+}
+
+function populateArrayDayOne(jsonDayOne) {
+    arrDayOne = [];
+    isBeforeDayOne = true;
+    for (var date in jsonDayOne.timeline.cases) {
+        if (jsonDayOne.timeline.cases[date] != 0) {
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            isBeforeDayOne = false;
+        }
+        if (!isBeforeDayOne) {
+            arrDayOne.push([date, jsonDayOne.timeline.cases[date]]);
+        }
+    }
+    return arrDayOne;
 }
 
 
@@ -17,31 +30,45 @@ function getJSON(theUrl) {
 }
 
 function populateChartConfirmed(chart, jsonDayOne) {
-    for (let i = 0; i < jsonDayOne.length; i++) {
-        calculatePoint(chart, jsonDayOne, i);
+    for (var date in jsonDayOne.timeline.cases) {
+        var confirmed = jsonDayOne.timeline.cases[date];
+        var thisDate = new Date(date);
+        addPointToChart(chart, thisDate, confirmed);
     }
     chart.render();
+
 }
+/**
+ * for (let i = 0; i < jsonDayOne.length; i++) {
+    calculatePoint(chart, jsonDayOne, i);
+    let date = new Date(jsonDayOne[i].Date);
+    date.setDate(date.getDate() + 1);
+    let totalDeaths = jsonDayOne[i].Deaths;
+    console.log(totalDeaths);
+    chart.options.data[1].dataPoints.push({
+        x: date,
+        y: totalDeaths
+    });
+ */
+
 
 function populateChartNewCases(newCasesTable, jsonDayOne) {
-    calculatePoint(newCasesTable, jsonDayOne, 0);
-    for (let i = 1; i < jsonDayOne.length; i++) {
-        const currentDay = jsonDayOne[i];
-        let currentDate = calculateDate(currentDay);
-        const previousDayConfirmedCases = jsonDayOne[i - 1].Confirmed;
-        const currentDayNewCases = parseInt(currentDay.Confirmed) - parseInt(previousDayConfirmedCases);
+    var arrDayOne = populateArrayDayOne(jsonDayOne);
+    var firstDay = arrDayOne[0];
+    addPointToChart(newCasesTable, new Date(firstDay[0]), firstDay[1]);
+
+    for (let i = 1; i < arrDayOne.length; i++) {
+        const currentDay = arrDayOne[i];
+        let currentDate = new Date(currentDay[0]);
+        const previousDayConfirmedCases = arrDayOne[i - 1][1];
+        const currentDayNewCases = parseInt(currentDay[1]) - parseInt(previousDayConfirmedCases);
         addPointToChart(newCasesTable, currentDate, currentDayNewCases);
     }
     newCasesTable.render();
 }
 
-function calculatePoint(chart, jsonDayOne, index) {
-    const day = jsonDayOne[index];
-    let date = new Date(day.Date);
-    date.setDate(date.getDate() + 1);
-    let confirmed = day.Confirmed;
-    addPointToChart(chart, date, confirmed);
-}
+
+
 
 function addPointToChart(chart, x, y) {
     chart.options.data[0].dataPoints.push({
@@ -50,17 +77,12 @@ function addPointToChart(chart, x, y) {
     });
 }
 
-function calculateDate(day) {
-    let date = new Date(day.Date);
-    date.setDate(date.getDate() + 1);
-    return date;
-}
 
 function onLoad() {
 
     var chart = new CanvasJS.Chart("chartContainer", {
         animationEnabled: true,
-        theme: "dark1",
+        theme: "dark2",
         backgroundColor: "transparent",
         title: {
             text: "Evolution COVID-19"
@@ -95,6 +117,13 @@ function onLoad() {
             lineDashType: "solid",
             lineColor: "#f5deb3",
             dataPoints: []
+        }, {
+            type: "line",
+            showInLegend: true,
+            name: "Total Deaths",
+            lineDashType: "dash",
+            lineColor: "#f5deb3",
+            dataPoints: []
         }]
     });
 
@@ -118,7 +147,7 @@ function onLoadNewCases(params) {
         theme: "dark1",
         backgroundColor: "transparent",
         title: {
-            text: "Dayly Cases"
+            text: "Daily Cases"
         },
         axisX: {
             valueFormatString: "DD MMM",
