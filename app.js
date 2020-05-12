@@ -67,7 +67,10 @@ function populateSelect(responseText) {
     var paises = getCountries(responseText);
     for (i in paises) {
         var opt = document.createElement("option");
+        var img = document.createElement("img");
+        img.src = "https://disease.sh/assets/img/flags/ao.png";
         opt.value = paises[i];
+        opt.appendChild(img);
         opt.innerHTML = paises[i];
         selectElement.appendChild(opt);
     }

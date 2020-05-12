@@ -66,6 +66,7 @@ function onLoad() {
 
     var chart = new CanvasJS.Chart("chartContainer", {
         animationEnabled: true,
+        zoomEnabled: true,
         theme: "dark2",
         backgroundColor: "transparent",
         title: {

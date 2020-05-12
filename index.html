@@ -35,7 +35,7 @@
         <div class="col-4">
             <div class="txt">
                 <select class="custom-select my-select" id="select" name="select">
-                    <option >All</option>
+                    <option data-icon="https://disease.sh/assets/img/flags/ao.png">All</option>
                 </select>
             </div>
             <br>
@@ -43,23 +43,27 @@
     </div>
     <div class="row">
         <div class="col">
-            <table class="tablaResultado">
-                <tr class="fila">
-                    <th class="encabezado" id="infoMuertosPais">Muertos</th>
-                    <th class="encabezado" id="infoRecuperadosPais">Recuperados</th>
-                    <th class="encabezado" id="infoConfirmadosPais">Confirmados</th>
-                    <th class="encabezado" id="infoActive">Activos</th>
-                    <th class="encabezado" id="infoTests">Tests</th>
-                    <th class="encabezado" id="infoCritical">Criticos</th>
-                </tr>
-                <tr class="fila sr-only" id="infoRow">
-                    <td class="columna" id="deaths"></td>
-                    <td class="columna" id="recovered"></td>
-                    <td class="columna" id="confirmed"></td>
-                    <td class="columna" id="active"></td>
-                    <td class="columna" id="tests"></td>
-                    <td class="columna" id="critical"></td>
-                </tr>
+            <table class="table table-bordered table-dark table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" id="infoRecuperadosPais">Recuperados</th>
+                        <th scope="col" id="infoConfirmadosPais">Confirmados</th>
+                        <th scope="col" id="infoActive">Activos</th>
+                        <th scope="col" id="infoTests">Tests</th>
+                        <th scope="col" id="infoMuertosPais">Muertos</th>
+                        <th scope="col" id="infoCritical">Criticos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="sr-only" id="infoRow">
+                        <td scope="col" id="deaths"></td>
+                        <td scope="col" id="recovered"></td>
+                        <td scope="col" id="confirmed"></td>
+                        <td scope="col" id="active"></td>
+                        <td scope="col" id="tests"></td>
+                        <td scope="col" id="critical"></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
