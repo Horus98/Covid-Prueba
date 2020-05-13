@@ -1,3 +1,6 @@
+var chartGlobal;
+var chartGlobalNewCases;
+
 function drawChart() {
     getJSON(getDayOneUrl(obtenerLocacion()), initCharts);
 
@@ -27,12 +30,16 @@ function initCharts(responseText) {
 }
 
 function populateChartConfirmed(chart, jsonDayOne) {
-    for (var date in jsonDayOne.timeline.cases) {
-        var confirmed = jsonDayOne.timeline.cases[date];
-        var thisDate = new Date(date);
+    var arrDayOne = populateArrayDayOne(jsonDayOne);
+    for (let i = 0; i < arrDayOne.length; i++) {
+        const day = arrDayOne[i];
+        var thisDate = new Date(day[0]);
+        var confirmed = day[1];
         addPointToChart(chart, thisDate, confirmed);
+        chart.update();
+
     }
-    chart.render();
+
 
 }
 
@@ -45,137 +52,152 @@ function populateChartNewCases(newCasesTable, jsonDayOne) {
         const currentDay = arrDayOne[i];
         let currentDate = new Date(currentDay[0]);
         const previousDayConfirmedCases = arrDayOne[i - 1][1];
-        const currentDayNewCases = parseInt(currentDay[1]) - parseInt(previousDayConfirmedCases);
+        let currentDayNewCases = parseInt(currentDay[1]) - parseInt(previousDayConfirmedCases);
+        currentDayNewCases = (currentDayNewCases < 0) ? 0 : currentDayNewCases;
         addPointToChart(newCasesTable, currentDate, currentDayNewCases);
+        newCasesTable.update();
     }
-    newCasesTable.render();
+
 }
 
-
-
-
 function addPointToChart(chart, x, y) {
-    chart.options.data[0].dataPoints.push({
-        x: x,
-        y: y
-    });
+    chart.data.labels.push(x.toLocaleDateString());
+    chart.data.datasets[0].data.push(y);
 }
 
 
 function onLoad() {
-
-    var chart = new CanvasJS.Chart("chartContainer", {
-        animationEnabled: true,
-        zoomEnabled: true,
-        theme: "dark2",
-        backgroundColor: "transparent",
-        title: {
-            text: "Evolution COVID-19"
+    var config = {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: "Confirmed",
+                backgroundColor: "#fcd303",
+                borderColor: "#fcd303",
+                data: [],
+                pointRadius: 0,
+                fill: false,
+            }]
         },
-        axisX: {
-            valueFormatString: "DD MMM",
-            crosshair: {
-                enabled: true,
-                snapToDataPoint: true
-            }
-        },
-        axisY: {
-            title: "Number of Cases",
-            crosshair: {
-                enabled: true
-            }
-        },
-        toolTip: {
-            shared: true
-        },
-        legend: {
-            cursor: "pointer",
-            verticalAlign: "bottom",
-            horizontalAlign: "left",
-            dockInsidePlotArea: true,
-            itemclick: toogleDataSeries
-        },
-        data: [{
-            type: "line",
-            showInLegend: true,
-            name: "Total Cases",
-            lineDashType: "solid",
-            lineColor: "#f5deb3",
-            dataPoints: []
-        }, {
-            type: "line",
-            showInLegend: true,
-            name: "Total Deaths",
-            lineDashType: "dash",
-            lineColor: "#f5deb3",
-            dataPoints: []
-        }]
-    });
-
-    function toogleDataSeries(e) {
-        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-            e.dataSeries.visible = false;
-        } else {
-            e.dataSeries.visible = true;
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Historical Confirmed',
+                fontColor: "#FFFFFF",
+                fontSize: "15"
+            },
+            tooltips: {
+                position: 'nearest',
+                mode: 'index',
+                intersect: false,
+                bodyFontSize: 16,
+                titleFontSize: 16,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Day'
+                    },
+                    ticks: {
+                        autoSkip: true,
+                        maxTicksLimit: 20
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Value'
+                    }
+                }]
+            },
         }
-        chart.render();
-    }
+    };
 
-
+    var ctx = document.getElementById("canvas").getContext("2d");
+    chart = new Chart(ctx, config);
+    chartGlobal = chart;
     return chart;
 }
 
-function onLoadNewCases(params) {
-
-    var chart = new CanvasJS.Chart("chartContainerNewCases", {
-        animationEnabled: true,
-        theme: "dark1",
-        backgroundColor: "transparent",
-        title: {
-            text: "Daily Cases"
+function onLoadNewCases() {
+    var config = {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: "New Cases",
+                backgroundColor: "#fcd303",
+                borderColor: "#fcd303",
+                data: [],
+                pointRadius: 0,
+                fill: false,
+            }]
         },
-        axisX: {
-            valueFormatString: "DD MMM",
-            crosshair: {
-                enabled: true,
-                snapToDataPoint: true
-            }
-        },
-        axisY: {
-            title: "Number of New Cases",
-            crosshair: {
-                enabled: true
-            }
-        },
-        toolTip: {
-            shared: true
-        },
-        legend: {
-            cursor: "pointer",
-            verticalAlign: "bottom",
-            horizontalAlign: "left",
-            dockInsidePlotArea: true,
-            itemclick: toogleDataSeries
-        },
-        data: [{
-            type: "line",
-            showInLegend: true,
-            name: "New Cases",
-            lineDashType: "solid",
-            lineColor: "#f5deb3",
-            dataPoints: []
-        }]
-    });
-
-    function toogleDataSeries(e) {
-        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-            e.dataSeries.visible = false;
-        } else {
-            e.dataSeries.visible = true;
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'New Cases Per Day',
+                fontColor: "#FFFFFF",
+                fontSize: "15"
+            },
+            tooltips: {
+                position: 'nearest',
+                mode: 'index',
+                intersect: false,
+                bodyFontSize: 16,
+                titleFontSize: 16,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Day'
+                    },
+                    ticks: {
+                        autoSkip: true,
+                        maxTicksLimit: 20
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Value'
+                    }
+                }]
+            },
         }
-        chart.render();
+    };
+
+    var ctx = document.getElementById("canvasNewCases").getContext("2d");
+    chart = new Chart(ctx, config);
+    chartGlobalNewCases = chart;
+    return chart;
+
+}
+
+function cleanChart() {
+    try {
+        chartGlobal.data.labels = [];
+        chartGlobal.data.datasets.pop();
+        chartGlobalNewCases.data.labels = [];
+        chartGlobalNewCases.data.datasets.pop();
+    } catch (error) {
+        console.log(error)
     }
 
 
-    return chart;
 }

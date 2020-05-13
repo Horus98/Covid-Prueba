@@ -99,6 +99,7 @@ selectElement.onchange = function() {
     else {
         if (paisSeleccionado != "All") {
             obtenerInfo(paisSeleccionado);
+            cleanChart();
             drawChart();
 
         }
