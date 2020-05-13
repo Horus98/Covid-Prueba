@@ -213,3 +213,51 @@ option{
  
 }
 
+.carta{
+  background-color: #322f30;
+}
+
+.skull{
+  color: red;
+}
+.txtDeaths{
+  color: red;
+}
+.plus{
+  color: rgb(112, 168, 0);;
+}
+.txtRecovered{
+  color: rgb(112, 168, 0);;
+}
+
+.biohazard{
+  color: #ffc107;
+}
+
+.txtConfirmed{
+  color: #ffc107;
+}
+
+.heartbeat{
+  color: rgb(255, 145, 0);
+}
+
+.txtCritical{
+  color: rgb(255, 145, 0);
+}
+
+.head-side-cough{
+  color: wheat;
+}
+
+.txtActive{
+  color: wheat;
+}
+
+.info{
+  color: #17a2b8;
+}
+
+.txtTests{
+  color: #17a2b8;
+}
