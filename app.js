@@ -53,12 +53,12 @@ function init(responseText) {
 
 function insertInTable(responseText) {
     jsonSummary = JSON.parse(responseText)
-    document.getElementById('deaths').innerHTML = jsonSummary.deaths;
-    document.getElementById('recovered').innerHTML = jsonSummary.recovered;
-    document.getElementById('confirmed').innerHTML = jsonSummary.cases;
-    document.getElementById('active').innerHTML = jsonSummary.active;
-    document.getElementById('tests').innerHTML = jsonSummary.tests;
-    document.getElementById('critical').innerHTML = jsonSummary.critical;
+    document.getElementById('deaths').innerHTML = new Intl.NumberFormat().format(jsonSummary.deaths);
+    document.getElementById('recovered').innerHTML =new Intl.NumberFormat().format(jsonSummary.recovered);
+    document.getElementById('confirmed').innerHTML = new Intl.NumberFormat().format(jsonSummary.cases);
+    document.getElementById('active').innerHTML = new Intl.NumberFormat().format(jsonSummary.active);
+    document.getElementById('tests').innerHTML = new Intl.NumberFormat().format(jsonSummary.tests);
+    document.getElementById('critical').innerHTML = new Intl.NumberFormat().format(jsonSummary.critical);
     setRowVisible();
 }
 
