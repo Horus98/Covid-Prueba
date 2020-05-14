@@ -54,7 +54,7 @@ function init(responseText) {
 function insertInTable(responseText) {
     jsonSummary = JSON.parse(responseText)
     document.getElementById('deaths').innerHTML = new Intl.NumberFormat("de-ES").format(jsonSummary.deaths);
-    document.getElementById('recovered').innerHTML =new Intl.NumberFormat("de-ES").format(jsonSummary.recovered);
+    document.getElementById('recovered').innerHTML = new Intl.NumberFormat("de-ES").format(jsonSummary.recovered);
     document.getElementById('confirmed').innerHTML = new Intl.NumberFormat("de-ES").format(jsonSummary.cases);
     document.getElementById('active').innerHTML = new Intl.NumberFormat("de-ES").format(jsonSummary.active);
     document.getElementById('tests').innerHTML = new Intl.NumberFormat("de-ES").format(jsonSummary.tests);
@@ -103,22 +103,9 @@ selectElement.onchange = function() {
             drawChart();
 
         }
-
     }
-
 }
 
 function initGlobal() {
     obtenerInfo("All");
-}
-
-
-/**
- * Hace visible la fila que contiene la informacion de la tabla
- */
-function setRowVisible() {
-    let listClassesRow = document.getElementById("infoRow").classList
-    if (listClassesRow.contains('sr-only'))
-    //Solo se ejecuta la primera vez que se selecciona un pais
-        listClassesRow.remove('sr-only')
 }
