@@ -2,64 +2,13 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css);
 .font {
     font-family: "Arial Black", Gadget, sans-serif;
-    font-size: 29px;
-    text-align: center;
-    letter-spacing: 2px;
-    word-spacing: 2px;
     color: rgb(131, 131, 131);
-    font-weight: 700;
-    text-decoration: none;
-    font-style: normal;
-    font-variant: normal;
-    text-transform: none;
     position: relative;
-}
-
-@media only screen and (min-width: 300px) {
-    .font {
-        font-size: 16px;
-    }
-}
-
-@media only screen and (min-width: 530px) {
-    .font {
-        font-size: 20px;
-    }
-}
-
-@media only screen and (min-width: 650px) {
-    .font {
-        font-size: 23px;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .font {
-        font-size: 27px;
-    }
-}
-
-@media only screen and (min-width: 1080px) {
-    .font {
-        font-size: 30px;
-    }
 }
 
 .background {
     background-color: rgb(22, 22, 22);
     -webkit-font-smoothing: antialiased;
-}
-
-.select {
-    border-radius: 5px 5px 5px 5px;
-    outline: none;
-    background-color: whitesmoke;
-    color: black;
-    cursor: pointer;
-}
-
-select :focus {
-    border-radius: 10px 10px 10px 10px;
 }
 
 option {
@@ -83,44 +32,31 @@ option {
 }
 
 @media only screen and (min-width: 300px) {
-    .caja {
-        font-size: 10px;
+    .txt {
+        font-size: 14px;
+    }
+    .chart-container {
+        height: 55vh;
+        width: 60vw;
+    }
+    .font {
+        font-size: 16px;
     }
 }
 
 @media only screen and (min-width: 350px) {
+    .txt {
+        font-size: 14px;
+    }
+    .chart-container {
+        height: 55vh;
+        width: 60vw;
+    }
+    .font {
+        font-size: 20px;
+    }
     .caja {
         font-size: 12px;
-    }
-}
-
-@media only screen and (min-width: 450px) {
-    .caja {
-        font-size: 18px;
-    }
-}
-
-.txt {
-    text-align: center;
-}
-
-@media only screen and (min-width: 300px) {
-    .txt {
-        font-size: 14px;
-    }
-    .chart-container {
-        height: 55vh;
-        width: 60vw;
-    }
-}
-
-@media only screen and (min-width: 350px) {
-    .txt {
-        font-size: 14px;
-    }
-    .chart-container {
-        height: 55vh;
-        width: 60vw;
     }
 }
 
@@ -132,6 +68,12 @@ option {
         height: 55vh;
         width: 60vw;
     }
+    .font {
+        font-size: 23px;
+    }
+    .caja {
+        font-size: 12px;
+    }
 }
 
 @media only screen and (min-width: 768px) {
@@ -142,11 +84,20 @@ option {
         height: 70vh;
         width: 70vw;
     }
+    .font {
+        font-size: 27px;
+    }
+    .caja {
+        font-size: 18px;
+    }
 }
 
 @media only screen and (min-width: 1080px) {
     .txt {
         font-size: 18px;
+    }
+    .font {
+        font-size: 30px;
     }
     .chart-container {
         height: 70vh;
