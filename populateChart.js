@@ -73,8 +73,8 @@ function onLoad() {
             labels: [],
             datasets: [{
                 label: "Confirmed",
-                backgroundColor: "#fcd303",
-                borderColor: "#fcd303",
+                backgroundColor: "#FFC107",
+                borderColor: "#FFC107",
                 data: [],
                 pointRadius: 0,
                 fill: false,
@@ -140,8 +140,8 @@ function onLoadNewCases() {
             labels: [],
             datasets: [{
                 label: "New Cases",
-                backgroundColor: "#fcd303",
-                borderColor: "#fcd303",
+                backgroundColor: "#FFC107",
+                borderColor: "#FFC107",
                 data: [],
                 pointRadius: 0,
                 fill: false,
