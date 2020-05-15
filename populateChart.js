@@ -81,7 +81,7 @@ function onLoad() {
             }]
         },
         options: {
-            responsive: true,
+            maintainAspectRatio: false,
             title: {
                 display: true,
                 text: 'Historical Confirmed',
@@ -107,7 +107,10 @@ function onLoad() {
                     },
                     ticks: {
                         autoSkip: true,
-                        maxTicksLimit: 20
+                        maxTicksLimit: 11
+                    },
+                    gridLines: {
+                        zeroLineColor: '#7d828a'
                     }
                 }],
                 yAxes: [{
@@ -115,6 +118,9 @@ function onLoad() {
                     scaleLabel: {
                         display: true,
                         labelString: 'Value'
+                    },
+                    gridLines: {
+                        zeroLineColor: '#7d828a'
                     }
                 }]
             },
@@ -142,7 +148,7 @@ function onLoadNewCases() {
             }]
         },
         options: {
-            responsive: true,
+            maintainAspectRatio: false,
             title: {
                 display: true,
                 text: 'New Cases Per Day',
@@ -168,7 +174,10 @@ function onLoadNewCases() {
                     },
                     ticks: {
                         autoSkip: true,
-                        maxTicksLimit: 20
+                        maxTicksLimit: 11
+                    },
+                    gridLines: {
+                        zeroLineColor: '#7d828a'
                     }
                 }],
                 yAxes: [{
@@ -176,6 +185,9 @@ function onLoadNewCases() {
                     scaleLabel: {
                         display: true,
                         labelString: 'Value'
+                    },
+                    gridLines: {
+                        zeroLineColor: '#7d828a'
                     }
                 }]
             },

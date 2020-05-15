@@ -108,11 +108,19 @@ option {
     .txt {
         font-size: 14px;
     }
+    .chart-container {
+        height: 55vh;
+        width: 60vw;
+    }
 }
 
 @media only screen and (min-width: 350px) {
     .txt {
         font-size: 14px;
+    }
+    .chart-container {
+        height: 55vh;
+        width: 60vw;
     }
 }
 
@@ -120,17 +128,29 @@ option {
     .txt {
         font-size: 14px;
     }
+    .chart-container {
+        height: 55vh;
+        width: 60vw;
+    }
 }
 
 @media only screen and (min-width: 768px) {
     .txt {
         font-size: 16px;
     }
+    .chart-container {
+        height: 70vh;
+        width: 70vw;
+    }
 }
 
 @media only screen and (min-width: 1080px) {
     .txt {
         font-size: 18px;
+    }
+    .chart-container {
+        height: 70vh;
+        width: 70vw;
     }
 }
 

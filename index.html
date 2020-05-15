@@ -16,7 +16,7 @@
     <title> COVID-19 INFO</title>
 </head>
 
-<body class="background container flex-colud-flex mn">
+<body class="background container flex-colud-flex mn border">
     <header>
         <p class="titulo">
             <div class="font">COVID-19 INFORMACION
@@ -148,13 +148,13 @@
 
     </div>
     <div class="row mt-5">
-        <div class="col">
-            <canvas id="canvas" style="display: block; height: 207px; width: 414px;" width="517" height="258" class="chartjs-render-monitor"></canvas>
+        <div class="col chart-container">
+            <canvas id="canvas" class="chartjs-render-monitor"></canvas>
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <canvas id="canvasNewCases" style="display: block; height: 207px; width: 414px;" width="517" height="258" class="chartjs-render-monitor"></canvas>
+        <div class="col chart-container">
+            <canvas id="canvasNewCases" class="chartjs-render-monitor"></canvas>
         </div>
     </div>
     <script src="utils.js"></script>
