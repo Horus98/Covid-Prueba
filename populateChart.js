@@ -15,7 +15,9 @@ function populateArrayDayOne(jsonDayOne) {
             isBeforeDayOne = false;
         }
         if (!isBeforeDayOne) {
-            arrDayOne.push([date, jsonDayOne.timeline.cases[date]]);
+            var confirmed = jsonDayOne.timeline.cases[date]
+            var deaths = jsonDayOne.timeline.deaths[date]
+            arrDayOne.push([date, confirmed, deaths]);
         }
     }
     return arrDayOne;
@@ -35,34 +37,39 @@ function populateChartConfirmed(chart, jsonDayOne) {
         const day = arrDayOne[i];
         var thisDate = new Date(day[0]);
         var confirmed = day[1];
-        addPointToChart(chart, thisDate, confirmed);
+        var deaths = day[2];
+        addPointToChart(chart, thisDate, confirmed, 0);
+        chart.data.datasets[1].data.push(deaths);
         chart.update();
-
     }
-
 
 }
 
 function populateChartNewCases(newCasesTable, jsonDayOne) {
     var arrDayOne = populateArrayDayOne(jsonDayOne);
     var firstDay = arrDayOne[0];
-    addPointToChart(newCasesTable, new Date(firstDay[0]), firstDay[1]);
-
+    addPointToChart(newCasesTable, new Date(firstDay[0]), firstDay[1], 0);
+    newCasesTable.data.datasets[1].data.push(firstDay[2]);
     for (let i = 1; i < arrDayOne.length; i++) {
         const currentDay = arrDayOne[i];
         let currentDate = new Date(currentDay[0]);
         const previousDayConfirmedCases = arrDayOne[i - 1][1];
         let currentDayNewCases = parseInt(currentDay[1]) - parseInt(previousDayConfirmedCases);
         currentDayNewCases = (currentDayNewCases < 0) ? 0 : currentDayNewCases;
-        addPointToChart(newCasesTable, currentDate, currentDayNewCases);
+        addPointToChart(newCasesTable, currentDate, currentDayNewCases, 0);
+
+        const previousDayDeaths = arrDayOne[i - 1][2]
+        let currentDayNewDeaths = parseInt(currentDay[2]) - parseInt(previousDayDeaths);
+        currentDayNewDeaths = (currentDayNewCases < 0) ? 0 : currentDayNewDeaths
+        newCasesTable.data.datasets[1].data.push(currentDayNewDeaths);
         newCasesTable.update();
     }
 
 }
 
-function addPointToChart(chart, x, y) {
+function addPointToChart(chart, x, y, index) {
     chart.data.labels.push(x.toLocaleDateString());
-    chart.data.datasets[0].data.push(y);
+    chart.data.datasets[index].data.push(y);
 }
 
 
@@ -75,6 +82,13 @@ function onLoad() {
                 label: "Confirmed",
                 backgroundColor: "#FFC107",
                 borderColor: "#FFC107",
+                data: [],
+                pointRadius: 0,
+                fill: false,
+            }, {
+                label: "Deaths",
+                backgroundColor: "#DC3545",
+                borderColor: "#DC3545",
                 data: [],
                 pointRadius: 0,
                 fill: false,
@@ -145,6 +159,13 @@ function onLoadNewCases() {
                 data: [],
                 pointRadius: 0,
                 fill: false,
+            }, {
+                label: "New Deaths",
+                backgroundColor: "#DC3545",
+                borderColor: "#DC3545",
+                data: [],
+                pointRadius: 0,
+                fill: false,
             }]
         },
         options: {
@@ -201,11 +222,18 @@ function onLoadNewCases() {
 
 }
 
+window.onresize = function() {
+    this.chartGlobal.update()
+    this.chartNewCases.update()
+}
+
 function cleanChart() {
     try {
         chartGlobal.data.labels = [];
         chartGlobal.data.datasets.pop();
+        chartGlobal.data.datasets.pop();
         chartGlobalNewCases.data.labels = [];
+        chartGlobalNewCases.data.datasets.pop();
         chartGlobalNewCases.data.datasets.pop();
     } catch (error) {
         console.log(error)
