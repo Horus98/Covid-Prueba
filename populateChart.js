@@ -2,7 +2,7 @@ var chartGlobal;
 var chartGlobalNewCases;
 
 function drawChart() {
-    getJSON(getDayOneUrl(obtenerLocacion()), initCharts);
+    getJSON(getDayOneUrl(getCountryNameFromSelect()), initCharts);
 
 }
 
@@ -223,8 +223,8 @@ function onLoadNewCases() {
 }
 
 window.onresize = function() {
-    this.chartGlobal.update()
-    this.chartNewCases.update()
+    chartGlobal.update()
+    chartGlobalNewCases.update()
 }
 
 function cleanChart() {
