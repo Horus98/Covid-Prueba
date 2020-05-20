@@ -10,10 +10,10 @@ function populateArrayDayOne(jsonDayOne) {
     arrDayOne = [];
     isBeforeDayOne = true;
     for (var date in jsonDayOne.timeline.cases) {
-        if (jsonDayOne.timeline.cases[date] != 0) {
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if (jsonDayOne.timeline.cases[date] != 0 && isBeforeDayOne) {
             isBeforeDayOne = false;
         }
+
         if (!isBeforeDayOne) {
             var confirmed = jsonDayOne.timeline.cases[date]
             var deaths = jsonDayOne.timeline.deaths[date]
@@ -38,8 +38,7 @@ function populateChartConfirmed(chart, jsonDayOne) {
         var thisDate = new Date(day[0]);
         var confirmed = day[1];
         var deaths = day[2];
-        addPointToChart(chart, thisDate, confirmed, 0);
-        chart.data.datasets[1].data.push(deaths);
+        addPointToChart(chart, thisDate, confirmed, deaths);
         chart.update();
     }
 
@@ -48,28 +47,31 @@ function populateChartConfirmed(chart, jsonDayOne) {
 function populateChartNewCases(newCasesTable, jsonDayOne) {
     var arrDayOne = populateArrayDayOne(jsonDayOne);
     var firstDay = arrDayOne[0];
-    addPointToChart(newCasesTable, new Date(firstDay[0]), firstDay[1], 0);
-    newCasesTable.data.datasets[1].data.push(firstDay[2]);
+    addPointToChart(newCasesTable, new Date(firstDay[0]), firstDay[1], firstDay[2]);
     for (let i = 1; i < arrDayOne.length; i++) {
         const currentDay = arrDayOne[i];
         let currentDate = new Date(currentDay[0]);
+
         const previousDayConfirmedCases = arrDayOne[i - 1][1];
-        let currentDayNewCases = parseInt(currentDay[1]) - parseInt(previousDayConfirmedCases);
-        currentDayNewCases = (currentDayNewCases < 0) ? 0 : currentDayNewCases;
-        addPointToChart(newCasesTable, currentDate, currentDayNewCases, 0);
+        let currentDayNewCases = getNonNegative(parseInt(currentDay[1]) - parseInt(previousDayConfirmedCases));
 
         const previousDayDeaths = arrDayOne[i - 1][2]
-        let currentDayNewDeaths = parseInt(currentDay[2]) - parseInt(previousDayDeaths);
-        currentDayNewDeaths = (currentDayNewCases < 0) ? 0 : currentDayNewDeaths
-        newCasesTable.data.datasets[1].data.push(currentDayNewDeaths);
+        let currentDayNewDeaths = getNonNegative(parseInt(currentDay[2]) - parseInt(previousDayDeaths));
+
+        addPointToChart(newCasesTable, currentDate, currentDayNewCases, currentDayNewDeaths);
         newCasesTable.update();
     }
 
 }
 
-function addPointToChart(chart, x, y, index) {
+function getNonNegative(number) {
+    return (number < 0) ? 0 : number;
+}
+
+function addPointToChart(chart, x, y, deaths) {
     chart.data.labels.push(x.toLocaleDateString());
-    chart.data.datasets[index].data.push(y);
+    chart.data.datasets[0].data.push(y);
+    chart.data.datasets[1].data.push(deaths);
 }
 
 
